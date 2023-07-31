@@ -1,0 +1,7 @@
+[data-theme="dark"] {
+  --hancao-tools-bg-color: #29292a;
+}
+
+[data-theme="light"] {
+  --hancao-tools-bg-color: #f0f1f3;
+}

@@ -1,47 +1,30 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+  import { computed } from 'vue';
+  import PageWrapper from './components/page/page-wrapper.vue'
+  import ThemeToggler from './components/theme-toggler.vue';
+  import { useThemeStore } from './stores/theme';
+
+  // handle theme
+  const themeStore = useThemeStore();
+  themeStore.initTheme();
+  const dataTheme = computed(() => themeStore.theme);
+  const changeTheme = (val: boolean) => {
+    themeStore.toggleTheme(val ? 'dark' : 'light');
+  }
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div :data-theme="dataTheme" class="app-wrapper">
+    <PageWrapper>
+      <template #menuSuffix>
+        <ThemeToggler :default-theme="dataTheme" @change-theme="changeTheme" />
+      </template>
+    </PageWrapper>  
+  </div>
 </template>
-
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.app-wrapper {
+  width: 100%;
+  height: 100%;
 }
 </style>
